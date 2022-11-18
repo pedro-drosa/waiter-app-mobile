@@ -22,11 +22,12 @@ export function Main() {
 
   function handleSaveTable(table: string) {
     setSelectedTable(table);
-    setCartItems([]);
+    setIsTableModalVisible(false);
   }
 
-  function handleCancelOrder() {
+  function handleResetOrder() {
     setSelectedTable('');
+    setCartItems([]);
   }
 
   function handleAddToCart(product: Product) {
@@ -67,10 +68,7 @@ export function Main() {
   return (
     <>
       <Container>
-        <Header
-          selectedTable={selectedTable}
-          onCacelOrder={handleCancelOrder}
-        />
+        <Header selectedTable={selectedTable} onCacelOrder={handleResetOrder} />
         <CategoriesContainer>
           <Categories />
         </CategoriesContainer>
@@ -90,6 +88,7 @@ export function Main() {
               cartItems={cartItems}
               onAdd={handleAddToCart}
               onDecrement={handleDecrementCartItem}
+              onConfirmOrder={handleResetOrder}
             />
           )}
         </FooterContainer>
