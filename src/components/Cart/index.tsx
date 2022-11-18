@@ -2,6 +2,7 @@ import { FlatList, TouchableOpacity } from 'react-native';
 import { CartItem } from '../../types/CartItem';
 import { Text } from '../Text';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { Product } from '../../types/Product';
 import {
   Item,
   ProductContainer,
@@ -18,9 +19,15 @@ import { Button } from '../Button';
 
 interface CartProps {
   cartItems: CartItem[];
+  onAdd: (product: Product) => void;
 }
 
-export function Cart({ cartItems }: CartProps) {
+export function Cart({ cartItems, onAdd }: CartProps) {
+  const total = cartItems.reduce((sum, cartItem) => {
+    sum += cartItem.quantity * cartItem.product.price;
+    return sum;
+  }, 0);
+
   return (
     <>
       {cartItems.length > 0 && (
@@ -53,7 +60,10 @@ export function Cart({ cartItems }: CartProps) {
                 </ProductDetails>
               </ProductContainer>
               <Actions>
-                <TouchableOpacity style={{ marginRight: 24 }}>
+                <TouchableOpacity
+                  onPress={() => onAdd(cartItem.product)}
+                  style={{ marginRight: 24 }}
+                >
                   <PlusCircle />
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -70,7 +80,7 @@ export function Cart({ cartItems }: CartProps) {
             <>
               <Text color="#666">Total</Text>
               <Text size={20} weight="600">
-                {formatCurrency(120)}
+                {formatCurrency(total)}
               </Text>
             </>
           ) : (
