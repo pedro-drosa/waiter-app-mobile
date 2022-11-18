@@ -5,7 +5,7 @@ import { ProductModal } from '../ProductModal';
 import { Product } from '../../types/Product';
 import { PlusCircle } from '../Icons/PlusCircle';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { products } from '../../mocks/products';
+
 import {
   ProductImage,
   ProductDetails,
@@ -16,9 +16,10 @@ import {
 
 interface MenuProps {
   onAddToCart: (product: Product) => void;
+  products: Product[];
 }
 
-export function Menu({ onAddToCart }: MenuProps) {
+export function Menu({ onAddToCart, products }: MenuProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<null | Product>(null);
 
